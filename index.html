@@ -642,6 +642,547 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+                        // DADOS FINANCEIROS
+            const dadosFinanceiros = {
+                meses: [
+                    "Dezembro/2023", "Janeiro/2024", "Fevereiro/2024", "Março/2024", 
+                    "Abril/2024", "Maio/2024", "Junho/2024", "Julho/2024", 
+                    "Agosto/2024", "Setembro/2024", "Outubro/2024", "Novembro/2024"
+                ],
+                receitas: [
+                    // Valores mensais de receitas [Dez/23 a Nov/24]
+                    {
+                        categoria: "Ordinárias",
+                        valores: [42580.00, 43120.00, 43050.00, 43200.00, 43150.00, 43300.00, 43250.00, 43400.00, 43350.00, 43500.00, 43450.00, 43600.00]
+                    },
+                    {
+                        categoria: "Fundo de Reserva",
+                        valores: [4258.00, 4312.00, 4305.00, 4320.00, 4315.00, 4330.00, 4325.00, 4340.00, 4335.00, 4350.00, 4345.00, 4360.00]
+                    },
+                    {
+                        categoria: "Fundo de RH",
+                        valores: [2129.00, 2156.00, 2152.50, 2160.00, 2157.50, 2165.00, 2162.50, 2170.00, 2167.50, 2175.00, 2172.50, 2180.00]
+                    },
+                    {
+                        categoria: "Outras Receitas",
+                        valores: [1250.00, 980.00, 1320.00, 1150.00, 1420.00, 1280.00, 1350.00, 1190.00, 1480.00, 1260.00, 1390.00, 1520.00]
+                    }
+                ],
+                despesas: [
+                    // Valores mensais de despesas [Dez/23 a Nov/24]
+                    {
+                        categoria: "Pessoal",
+                        valores: [18250.00, 18350.00, 18450.00, 18550.00, 18650.00, 18750.00, 18850.00, 18950.00, 19050.00, 19150.00, 19250.00, 19350.00]
+                    },
+                    {
+                        categoria: "Administrativas",
+                        valores: [5680.00, 5720.00, 5760.00, 5800.00, 5840.00, 5880.00, 5920.00, 5960.00, 6000.00, 6040.00, 6080.00, 6120.00]
+                    },
+                    {
+                        categoria: "Consumo",
+                        valores: [8950.00, 9120.00, 8870.00, 9250.00, 9380.00, 9150.00, 9420.00, 9280.00, 9530.00, 9350.00, 9480.00, 9620.00]
+                    },
+                    {
+                        categoria: "Manutenção",
+                        valores: [7320.00, 6850.00, 7580.00, 7120.00, 7450.00, 7280.00, 7650.00, 7380.00, 7820.00, 7520.00, 7750.00, 7980.00]
+                    },
+                    {
+                        categoria: "Outras Despesas",
+                        valores: [2150.00, 1980.00, 2250.00, 2080.00, 2320.00, 2180.00, 2420.00, 2280.00, 2520.00, 2380.00, 2620.00, 2480.00]
+                    }
+                ],
+                inadimplencia: {
+                    // Valores mensais de inadimplência [Dez/23 a Nov/24]
+                    valores: [3850.00, 3920.00, 3780.00, 4050.00, 3950.00, 4120.00, 4080.00, 4250.00, 4180.00, 4320.00, 4280.00, 4450.00],
+                    // Percentual em relação às receitas ordinárias
+                    percentuais: [9.04, 9.09, 8.78, 9.38, 9.15, 9.52, 9.43, 9.79, 9.64, 9.93, 9.85, 10.21]
+                },
+                fundos: {
+                    // Saldos mensais dos fundos [Dez/23 a Nov/24]
+                    reserva: [52680.00, 56992.00, 61297.00, 65617.00, 69932.00, 74262.00, 78587.00, 82927.00, 87262.00, 91612.00, 95957.00, 100317.00],
+                    rh: [26340.00, 28496.00, 30648.50, 32808.50, 34966.00, 37131.00, 39293.50, 41463.50, 43631.00, 45806.00, 47978.50, 50158.50]
+                },
+                saldos: {
+                    // Saldos mensais [Dez/23 a Nov/24]
+                    mensal: [7867.00, 8548.00, 7917.50, 8220.00, 7802.50, 8085.00, 7827.50, 8260.00, 7812.50, 8365.00, 8027.50, 8110.00],
+                    acumulado: [42580.00, 51128.00, 59045.50, 67265.50, 75068.00, 83153.00, 90980.50, 99240.50, 107053.00, 115418.00, 123445.50, 131555.50]
+                },
+                indicadores: {
+                    // Médias anuais
+                    mediaReceitas: 43147.92,
+                    mediaDespesas: 35039.58,
+                    mediaSaldo: 8108.33,
+                    mediaInadimplencia: 4102.50,
+                    percentualInadimplencia: 9.51
+                }
+            };
+            // FUNÇÕES DO BI FINANCEIRO
+            // Função para formatar valores monetários
+            function formatarMoeda(valor) {
+                return 'R$ ' + valor.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+            
+            // Função para formatar percentuais
+            function formatarPercentual(valor) {
+                return valor.toFixed(2).replace('.', ',') + '%';
+            }
+            
+            // Função para calcular variação percentual
+            function calcularVariacao(atual, anterior) {
+                if (anterior === 0) return 0;
+                return ((atual - anterior) / anterior) * 100;
+            }
+            
+            // Função para atualizar o dashboard com os dados do mês selecionado
+            function atualizarDashboardFinanceiro(mesIndex) {
+                // Calcular totais de receitas e despesas para o mês selecionado
+                let totalReceitas = 0;
+                let totalDespesas = 0;
+                
+                dadosFinanceiros.receitas.forEach(categoria => {
+                    totalReceitas += categoria.valores[mesIndex];
+                });
+                
+                dadosFinanceiros.despesas.forEach(categoria => {
+                    totalDespesas += categoria.valores[mesIndex];
+                });
+                
+                const saldoMes = totalReceitas - totalDespesas;
+                
+                // Calcular variações em relação ao mês anterior
+                let variacaoReceitas = 0;
+                let variacaoDespesas = 0;
+                let variacaoSaldo = 0;
+                
+                if (mesIndex > 0) {
+                    let totalReceitasAnterior = 0;
+                    let totalDespesasAnterior = 0;
+                    
+                    dadosFinanceiros.receitas.forEach(categoria => {
+                        totalReceitasAnterior += categoria.valores[mesIndex - 1];
+                    });
+                    
+                    dadosFinanceiros.despesas.forEach(categoria => {
+                        totalDespesasAnterior += categoria.valores[mesIndex - 1];
+                    });
+                    
+                    const saldoMesAnterior = totalReceitasAnterior - totalDespesasAnterior;
+                    
+                    variacaoReceitas = calcularVariacao(totalReceitas, totalReceitasAnterior);
+                    variacaoDespesas = calcularVariacao(totalDespesas, totalDespesasAnterior);
+                    variacaoSaldo = calcularVariacao(saldoMes, saldoMesAnterior);
+                }
+                
+                // Atualizar cards de resumo
+                document.getElementById('valor-receitas').textContent = formatarMoeda(totalReceitas);
+                document.getElementById('valor-despesas').textContent = formatarMoeda(totalDespesas);
+                document.getElementById('valor-saldo').textContent = formatarMoeda(saldoMes);
+                document.getElementById('valor-inadimplencia').textContent = formatarMoeda(dadosFinanceiros.inadimplencia.valores[mesIndex]);
+                
+                document.getElementById('variacao-receitas').textContent = 
+                    (variacaoReceitas >= 0 ? '+' : '') + formatarPercentual(variacaoReceitas) + ' em relação ao mês anterior';
+                document.getElementById('variacao-despesas').textContent = 
+                    (variacaoDespesas >= 0 ? '+' : '') + formatarPercentual(variacaoDespesas) + ' em relação ao mês anterior';
+                document.getElementById('variacao-saldo').textContent = 
+                    (variacaoSaldo >= 0 ? '+' : '') + formatarPercentual(variacaoSaldo) + ' em relação ao mês anterior';
+                document.getElementById('taxa-inadimplencia').textContent = 
+                    formatarPercentual(dadosFinanceiros.inadimplencia.percentuais[mesIndex]) + ' do total';
+                
+                // Atualizar tabela de receitas
+                const tabelaReceitas = document.getElementById('tabela-receitas');
+                tabelaReceitas.innerHTML = '';
+                
+                dadosFinanceiros.receitas.forEach(categoria => {
+                    const valor = categoria.valores[mesIndex];
+                    const percentual = (valor / totalReceitas) * 100;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="p-2">${categoria.categoria}</td>
+                        <td class="p-2 text-right">${formatarMoeda(valor)}</td>
+                        <td class="p-2 text-right">${formatarPercentual(percentual)}</td>
+                    `;
+                    tabelaReceitas.appendChild(row);
+                });
+                
+                document.getElementById('total-receitas').textContent = formatarMoeda(totalReceitas);
+                
+                // Atualizar tabela de despesas
+                const tabelaDespesas = document.getElementById('tabela-despesas');
+                tabelaDespesas.innerHTML = '';
+                
+                dadosFinanceiros.despesas.forEach(categoria => {
+                    const valor = categoria.valores[mesIndex];
+                    const percentual = (valor / totalDespesas) * 100;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="p-2">${categoria.categoria}</td>
+                        <td class="p-2 text-right">${formatarMoeda(valor)}</td>
+                        <td class="p-2 text-right">${formatarPercentual(percentual)}</td>
+                    `;
+                    tabelaDespesas.appendChild(row);
+                });
+                
+                document.getElementById('total-despesas').textContent = formatarMoeda(totalDespesas);
+                
+                // Atualizar saldos dos fundos
+                document.getElementById('saldo-fundo-reserva').textContent = formatarMoeda(dadosFinanceiros.fundos.reserva[mesIndex]);
+                document.getElementById('saldo-fundo-rh').textContent = formatarMoeda(dadosFinanceiros.fundos.rh[mesIndex]);
+                
+                if (mesIndex > 0) {
+                    const variacaoFundoReserva = calcularVariacao(
+                        dadosFinanceiros.fundos.reserva[mesIndex], 
+                        dadosFinanceiros.fundos.reserva[mesIndex - 1]
+                    );
+                    const variacaoFundoRH = calcularVariacao(
+                        dadosFinanceiros.fundos.rh[mesIndex], 
+                        dadosFinanceiros.fundos.rh[mesIndex - 1]
+                    );
+                    
+                    document.getElementById('variacao-fundo-reserva').textContent = 
+                        (variacaoFundoReserva >= 0 ? '+' : '') + formatarPercentual(variacaoFundoReserva);
+                    document.getElementById('variacao-fundo-rh').textContent = 
+                        (variacaoFundoRH >= 0 ? '+' : '') + formatarPercentual(variacaoFundoRH);
+                } else {
+                    document.getElementById('variacao-fundo-reserva').textContent = '+0,00%';
+                    document.getElementById('variacao-fundo-rh').textContent = '+0,00%';
+                }
+                
+                // Atualizar gráficos
+                atualizarGraficos(mesIndex);
+            }
+            
+            // Função para atualizar todos os gráficos
+            function atualizarGraficos(mesIndex) {
+                atualizarGraficoReceitasDespesas(mesIndex);
+                atualizarGraficoDistribuicaoDespesas(mesIndex);
+                atualizarGraficoEvolucaoFinanceira();
+                atualizarGraficoInadimplencia();
+            }
+            
+            // Gráfico de Receitas vs Despesas
+            function atualizarGraficoReceitasDespesas(mesIndex) {
+                const ctx = document.getElementById('grafico-receitas-despesas').getContext('2d');
+                
+                // Calcular totais por categoria para o mês selecionado
+                const dadosReceitas = dadosFinanceiros.receitas.map(categoria => ({
+                    categoria: categoria.categoria,
+                    valor: categoria.valores[mesIndex]
+                }));
+                
+                const dadosDespesas = dadosFinanceiros.despesas.map(categoria => ({
+                    categoria: categoria.categoria,
+                    valor: categoria.valores[mesIndex]
+                }));
+                
+                // Destruir gráfico anterior se existir
+                if (window.graficoReceitasDespesas) {
+                    window.graficoReceitasDespesas.destroy();
+                }
+                
+                // Criar novo gráfico
+                window.graficoReceitasDespesas = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Receitas', 'Despesas'],
+                        datasets: [
+                            {
+                                label: 'Valor Total',
+                                data: [
+                                    dadosReceitas.reduce((sum, item) => sum + item.valor, 0),
+                                    dadosDespesas.reduce((sum, item) => sum + item.valor, 0)
+                                ],
+                                backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+                                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return formatarMoeda(context.raw);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Distribuição de Despesas
+            function atualizarGraficoDistribuicaoDespesas(mesIndex) {
+                const ctx = document.getElementById('grafico-distribuicao-despesas').getContext('2d');
+                
+                // Obter dados de despesas para o mês selecionado
+                const categorias = dadosFinanceiros.despesas.map(item => item.categoria);
+                const valores = dadosFinanceiros.despesas.map(item => item.valores[mesIndex]);
+                
+                // Cores para o gráfico
+                const backgroundColors = [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ];
+                
+                const borderColors = [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ];
+                
+                // Destruir gráfico anterior se existir
+                if (window.graficoDistribuicaoDespesas) {
+                    window.graficoDistribuicaoDespesas.destroy();
+                }
+                
+                // Criar novo gráfico
+                window.graficoDistribuicaoDespesas = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: categorias,
+                        datasets: [{
+                            data: valores,
+                            backgroundColor: backgroundColors,
+                            borderColor: borderColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const value = context.raw;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((value / total) * 100).toFixed(2) + '%';
+                                        return formatarMoeda(value) + ' (' + percentage + ')';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Evolução Financeira
+            function atualizarGraficoEvolucaoFinanceira() {
+                const ctx = document.getElementById('grafico-evolucao-financeira').getContext('2d');
+                
+                // Preparar dados para o gráfico
+                const meses = dadosFinanceiros.meses;
+                
+                // Calcular totais mensais de receitas e despesas
+                const totaisReceitas = meses.map((_, index) => {
+                    return dadosFinanceiros.receitas.reduce((sum, categoria) => sum + categoria.valores[index], 0);
+                });
+                
+                const totaisDespesas = meses.map((_, index) => {
+                    return dadosFinanceiros.despesas.reduce((sum, categoria) => sum + categoria.valores[index], 0);
+                });
+                
+                const saldosMensais = meses.map((_, index) => {
+                    return totaisReceitas[index] - totaisDespesas[index];
+                });
+                
+                // Destruir gráfico anterior se existir
+                if (window.graficoEvolucaoFinanceira) {
+                    window.graficoEvolucaoFinanceira.destroy();
+                }
+                
+                // Criar novo gráfico
+                window.graficoEvolucaoFinanceira = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: meses,
+                        datasets: [
+                            {
+                                label: 'Receitas',
+                                data: totaisReceitas,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                tension: 0.1,
+                                fill: false
+                            },
+                            {
+                                label: 'Despesas',
+                                data: totaisDespesas,
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                tension: 0.1,
+                                fill: false
+                            },
+                            {
+                                label: 'Saldo',
+                                data: saldosMensais,
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                tension: 0.1,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' + formatarMoeda(context.raw);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Inadimplência
+            function atualizarGraficoInadimplencia() {
+                const ctx = document.getElementById('grafico-inadimplencia').getContext('2d');
+                
+                // Preparar dados para o gráfico
+                const meses = dadosFinanceiros.meses;
+                const valoresInadimplencia = dadosFinanceiros.inadimplencia.valores;
+                const percentuaisInadimplencia = dadosFinanceiros.inadimplencia.percentuais;
+                
+                // Destruir gráfico anterior se existir
+                if (window.graficoInadimplencia) {
+                    window.graficoInadimplencia.destroy();
+                }
+                
+                // Criar novo gráfico
+                window.graficoInadimplencia = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: meses,
+                        datasets: [
+                            {
+                                label: 'Valor (R$)',
+                                data: valoresInadimplencia,
+                                backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                borderWidth: 1,
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: 'Percentual (%)',
+                                data: percentuaisInadimplencia,
+                                type: 'line',
+                                borderColor: 'rgba(153, 102, 255, 1)',
+                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                borderWidth: 2,
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        if (context.dataset.label === 'Valor (R$)') {
+                                            return context.dataset.label + ': ' + formatarMoeda(context.raw);
+                                        } else {
+                                            return context.dataset.label + ': ' + context.raw.toFixed(2) + '%';
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Valor (R$)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'Percentual (%)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toFixed(1) + '%';
+                                    }
+                                },
+                                grid: {
+                                    drawOnChartArea: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Inicializar o BI financeiro
+            function inicializarBIFinanceiro() {
+                // Configurar evento de mudança no seletor de mês
+                const seletorMes = document.getElementById('mes-selecionado');
+                seletorMes.addEventListener('change', function() {
+                    const mesIndex = parseInt(this.value);
+                    atualizarDashboardFinanceiro(mesIndex);
+                });
+                
+                // Inicializar com o mês mais recente (novembro)
+                atualizarDashboardFinanceiro(11);
+            }
+            
+            // Adicionar inicialização do BI financeiro ao carregamento da página
+            document.addEventListener('DOMContentLoaded', function() {
+                // Código existente...
+                
+                // Adicionar inicialização do BI financeiro
+                inicializarBIFinanceiro();
+            }); 
+
             // Navegação baseada em hash
             function handleHashChange() {
                 const hash = window.location.hash || '#home';
