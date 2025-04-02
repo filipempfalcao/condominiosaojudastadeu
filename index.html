@@ -473,172 +473,162 @@
         </section>
         
         <!-- Seção Financeira -->
-        <section id="financeiro-section" class="space-y-6 hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Módulo Financeiro</h2>
+        <section id="financeiro-section" class="hidden p-6">
+            <h1 class="text-3xl font-bold mb-6 text-blue-700">Gestão Financeira - Condomínio São Judas Tadeu</h1>
+            
+            <div class="mb-6">
+                <label for="mes-selecionado" class="block text-sm font-medium text-gray-700 mb-1">Selecione o mês:</label>
+                <select id="mes-selecionado" class="w-full md:w-64 p-2 border border-gray-300 rounded-md">
+                    <option value="11">Novembro/2024</option>
+                    <option value="10">Outubro/2024</option>
+                    <option value="9">Setembro/2024</option>
+                    <option value="8">Agosto/2024</option>
+                    <option value="7">Julho/2024</option>
+                    <option value="6">Junho/2024</option>
+                    <option value="5">Maio/2024</option>
+                    <option value="4">Abril/2024</option>
+                    <option value="3">Março/2024</option>
+                    <option value="2">Fevereiro/2024</option>
+                    <option value="1">Janeiro/2024</option>
+                    <option value="0">Dezembro/2023</option>
+                </select>
             </div>
             
-            <!-- Dashboard Financeiro Incorporado -->
-            <div class="card p-0">
-                <!-- Cabeçalho -->
-                <header class="bg-blue-600 text-white p-6">
-                    <h1 class="text-3xl font-bold">Dashboard Financeiro</h1>
-                    <p class="mt-2">Condomínio Edifício São Judas Tadeu</p>
-                </header>
-                
-                <!-- Navegação -->
-                <nav class="bg-white shadow-md p-3">
-                    <div class="flex space-x-4">
-                        <div class="tab tab-active" id="tab-resumo">Resumo</div>
-                        <div class="tab" id="tab-despesas">Despesas</div>
-                        <div class="tab" id="tab-receitas">Receitas</div>
-                        <div class="tab" id="tab-fluxo-caixa">Fluxo de Caixa</div>
-                        <div class="tab" id="tab-relatorios">Relatórios</div>
-                    </div>
-                </nav>
-                
-                <!-- Conteúdo -->
-                <div class="p-6">
-                    <!-- Seção de Resumo -->
-                    <div id="conteudo-resumo">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-2xl font-bold">Resumo Financeiro</h2>
-                            <div class="flex items-center space-x-4">
-                                <select id="periodo-resumo" class="border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <option value="atual">Mês Atual (Março/2025)</option>
-                                    <option value="anterior">Mês Anterior (Fevereiro/2025)</option>
-                                    <option value="trimestre">Último Trimestre</option>
-                                    <option value="ano">Último Ano</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- Cards de Resumo -->
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                            <div class="card">
-                                <div class="card-title">Receitas Totais</div>
-                                <div class="text-3xl font-bold">R$ 42.350,00</div>
-                                <p class="text-sm indicator-up mt-2">+2,5% em relação ao mês anterior</p>
-                            </div>
-                            
-                            <div class="card">
-                                <div class="card-title">Despesas Totais</div>
-                                <div class="text-3xl font-bold">R$ 38.125,75</div>
-                                <p class="text-sm indicator-down mt-2">-1,8% em relação ao mês anterior</p>
-                            </div>
-                            
-                            <div class="card">
-                                <div class="card-title">Saldo do Mês</div>
-                                <div class="text-3xl font-bold">R$ 4.224,25</div>
-                                <p class="text-sm indicator-up mt-2">+15,3% em relação ao mês anterior</p>
-                            </div>
-                            
-                            <div class="card">
-                                <div class="card-title">Inadimplência</div>
-                                <div class="text-3xl font-bold">3,2%</div>
-                                <p class="text-sm indicator-down mt-2">-0,5% em relação ao mês anterior</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Gráficos de Resumo -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div class="card">
-                                <div class="card-title">Receitas vs Despesas</div>
-                                <canvas id="grafico-receitas-despesas" height="250"></canvas>
-                            </div>
-                            
-                            <div class="card">
-                                <div class="card-title">Distribuição de Despesas</div>
-                                <canvas id="grafico-distribuicao-despesas" height="250"></canvas>
-                            </div>
-                        </div>
-                        
-                        <!-- Tabela de Resumo -->
-                        <div class="card">
-                            <div class="card-title">Resumo por Categoria</div>
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orçado</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Realizado</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variação</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">% do Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap font-medium">Pessoal</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 18.500,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 18.325,50</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-green-600">-0,9%</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">48,1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap font-medium">Administrativas</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 5.200,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 5.450,25</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-red-600">+4,8%</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">14,3%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap font-medium">Consumo</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 8.800,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 9.125,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-red-600">+3,7%</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">23,9%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap font-medium">Manutenção</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 4.500,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 3.975,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-green-600">-11,7%</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">10,4%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap font-medium">Outros</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 1.200,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">R$ 1.250,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-red-600">+4,2%</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">3,3%</td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot class="bg-gray-50">
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap font-bold">Total</td>
-                                            <td class="px-6 py-4 whitespace-nowrap font-bold">R$ 38.200,00</td>
-                                            <td class="px-6 py-4 whitespace-nowrap font-bold">R$ 38.125,75</td>
-                                            <td class="px-6 py-4 whitespace-nowrap font-bold text-green-600">-0,2%</td>
-                                            <td class="px-6 py-4 whitespace-nowrap font-bold">100%</td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Outras seções (despesas, receitas, etc.) estariam aqui, mas estão ocultas inicialmente -->
-                    <div id="conteudo-despesas" class="hidden">
-                        <h2 class="text-2xl font-bold mb-6">Análise de Despesas</h2>
-                        <p>Conteúdo da seção de despesas...</p>
-                    </div>
-                    
-                    <div id="conteudo-receitas" class="hidden">
-                        <h2 class="text-2xl font-bold mb-6">Análise de Receitas</h2>
-                        <p>Conteúdo da seção de receitas...</p>
-                    </div>
-                    
-                    <div id="conteudo-fluxo-caixa" class="hidden">
-                        <h2 class="text-2xl font-bold mb-6">Fluxo de Caixa</h2>
-                        <p>Conteúdo da seção de fluxo de caixa...</p>
-                    </div>
-                    
-                    <div id="conteudo-relatorios" class="hidden">
-                        <h2 class="text-2xl font-bold mb-6">Relatórios Personalizados</h2>
-                        <p>Conteúdo da seção de relatórios...</p>
-                    </div>
+            <!-- Resumo Financeiro -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="card">
+                    <div class="card-title">Receitas</div>
+                    <div class="text-2xl font-bold text-green-600" id="valor-receitas">R$ 0,00</div>
+                    <div class="text-sm text-gray-500" id="variacao-receitas">0% em relação ao mês anterior</div>
                 </div>
+                <div class="card">
+                    <div class="card-title">Despesas</div>
+                    <div class="text-2xl font-bold text-red-600" id="valor-despesas">R$ 0,00</div>
+                    <div class="text-sm text-gray-500" id="variacao-despesas">0% em relação ao mês anterior</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Saldo</div>
+                    <div class="text-2xl font-bold" id="valor-saldo">R$ 0,00</div>
+                    <div class="text-sm text-gray-500" id="variacao-saldo">0% em relação ao mês anterior</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Inadimplência</div>
+                    <div class="text-2xl font-bold text-yellow-600" id="valor-inadimplencia">R$ 0,00</div>
+                    <div class="text-sm text-gray-500" id="taxa-inadimplencia">0% do total</div>
+                </div>
+            </div>
+            
+            <!-- Gráficos Principais -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="card">
+                    <div class="card-title">Receitas vs Despesas</div>
+                    <canvas id="grafico-receitas-despesas" height="250"></canvas>
+                </div>
+                <div class="card">
+                    <div class="card-title">Distribuição de Despesas</div>
+                    <canvas id="grafico-distribuicao-despesas" height="250"></canvas>
+                </div>
+            </div>
+            
+            <!-- Detalhamento de Receitas e Despesas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="card">
+                    <div class="card-title">Detalhamento de Receitas</div>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-2 text-left">Categoria</th>
+                                <th class="p-2 text-right">Valor</th>
+                                <th class="p-2 text-right">%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-receitas">
+                            <!-- Preenchido via JavaScript -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="font-bold">
+                                <td class="p-2">Total</td>
+                                <td class="p-2 text-right" id="total-receitas">R$ 0,00</td>
+                                <td class="p-2 text-right">100%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="card">
+                    <div class="card-title">Detalhamento de Despesas</div>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-2 text-left">Categoria</th>
+                                <th class="p-2 text-right">Valor</th>
+                                <th class="p-2 text-right">%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-despesas">
+                            <!-- Preenchido via JavaScript -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="font-bold">
+                                <td class="p-2">Total</td>
+                                <td class="p-2 text-right" id="total-despesas">R$ 0,00</td>
+                                <td class="p-2 text-right">100%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Evolução Temporal -->
+            <div class="card mb-6">
+                <div class="card-title">Evolução Financeira (12 meses)</div>
+                <canvas id="grafico-evolucao-financeira" height="300"></canvas>
+            </div>
+            
+            <!-- Fundos e Saldos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="card">
+                    <div class="card-title">Saldos dos Fundos</div>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-2 text-left">Fundo</th>
+                                <th class="p-2 text-right">Saldo Atual</th>
+                                <th class="p-2 text-right">Variação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-2">Fundo de Reserva</td>
+                                <td class="p-2 text-right" id="saldo-fundo-reserva">R$ 0,00</td>
+                                <td class="p-2 text-right" id="variacao-fundo-reserva">0%</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Fundo de RH</td>
+                                <td class="p-2 text-right" id="saldo-fundo-rh">R$ 0,00</td>
+                                <td class="p-2 text-right" id="variacao-fundo-rh">0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card">
+                    <div class="card-title">Inadimplência</div>
+                    <canvas id="grafico-inadimplencia" height="250"></canvas>
+                </div>
+            </div>
+            
+            <!-- Instruções de Atualização -->
+            <div class="card mb-6">
+                <div class="card-title">Instruções para Atualização Mensal</div>
+                <p class="mb-2">Para manter o BI financeiro atualizado com novos relatórios mensais:</p>
+                <ol class="list-decimal pl-5 mb-4">
+                    <li class="mb-1">Acesse seu repositório GitHub</li>
+                    <li class="mb-1">Edite o arquivo index.html</li>
+                    <li class="mb-1">Localize a seção "DADOS FINANCEIROS" no código</li>
+                    <li class="mb-1">Adicione os novos dados do mês no formato adequado</li>
+                    <li class="mb-1">Atualize a lista de meses no seletor</li>
+                    <li class="mb-1">Salve as alterações</li>
+                </ol>
+                <p>O sistema atualizará automaticamente os gráficos e análises com os novos dados.</p>
             </div>
         </section>
     </main>
