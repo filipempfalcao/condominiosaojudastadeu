@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Demanda - Condomínio São Judas Tadeu</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Condomínio São Judas Tadeu</div>
+                <button class="nav-toggle" id="navToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="demandas.html">Demandas</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="nova-demanda.html" class="active">Nova Demanda</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-3">
+        <h1 class="mb-3">Nova Demanda</h1>
+        
+        <div class="mb-3">
+            <a href="demandas.html" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> Voltar para Demandas
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form id="novaDemandaForm">
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" name="titulo" placeholder="Ex: Lâmpada queimada no corredor" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" name="categoria" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="eletrica">Elétrica</option>
+                            <option value="hidraulica">Hidráulica</option>
+                            <option value="estrutural">Estrutural</option>
+                            <option value="limpeza">Limpeza</option>
+                            <option value="seguranca">Segurança</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="criticidade">Criticidade</label>
+                        <select id="criticidade" name="criticidade" required>
+                            <option value="">Selecione a criticidade</option>
+                            <option value="baixa">Baixa</option>
+                            <option value="media">Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" name="descricao" placeholder="Descreva detalhadamente o problema..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="localizacao">Localização</label>
+                        <input type="text" id="localizacao" name="localizacao" placeholder="Ex: Corredor do 3º andar, próximo ao apartamento 302" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="anexos">Anexos (opcional)</label>
+                        <input type="file" id="anexos" name="anexos">
+                        <small>Você pode anexar fotos ou documentos relacionados à demanda (máx. 5MB)</small>
+                    </div>
+
+                    <div class="d-flex justify-between mt-4">
+                        <button type="button" class="btn btn-outline" id="cancelarBtn">Cancelar</button>
+                        <button type="submit" class="btn btn-accent">Enviar Demanda</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Sistema de Gestão de Condomínio</p>
+                <p>Desenvolvido para facilitar a gestão do condomínio e tornar o processo de atendimento de demandas mais transparente e eficiente.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.min.js"></script>
+    <script src="js/nova-demanda.min.js"></script>
+</body>
+</html>

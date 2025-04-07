@@ -1,0 +1,132 @@
+.mini-indicators {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.col-quarter {
+  width: 24%;
+  padding: 0 3px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  flex: 1;
+}
+
+.stat-card.ultra-compact {
+  padding: 5px;
+  height: auto;
+  min-height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-card.ultra-compact .stat-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.stat-card.ultra-compact .stat-label {
+  font-size: 9px;
+  margin-bottom: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-card.ultra-compact .stat-value {
+  font-size: 14px;
+  margin-bottom: 1px;
+  font-weight: bold;
+}
+
+.stat-card.ultra-compact .stat-change {
+  font-size: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Estilos para listas de demandas mais compactas */
+.demand-item {
+  padding: 5px 8px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.demand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.demand-title {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.demand-id {
+  font-size: 11px;
+  color: #666;
+}
+
+.demand-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.demand-badges {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.badge {
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 9px;
+  color: white;
+  display: inline-block;
+}
+
+.btn.btn-outline.btn-sm {
+  padding: 1px 4px;
+  font-size: 9px;
+  border: 1px solid #007bff;
+  border-radius: 3px;
+  color: #007bff;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 3px;
+}
+
+.btn.btn-outline.btn-sm:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .col-quarter {
+    width: 49%;
+  }
+}
+
+@media (max-width: 480px) {
+  .col-quarter {
+    width: 100%;
+  }
+}

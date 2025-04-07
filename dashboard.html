@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Condomínio São Judas Tadeu</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mini-indicators.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Condomínio São Judas Tadeu</div>
+                <button class="nav-toggle" id="navToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="demandas.html">Demandas</a></li>
+                        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                        <li><a href="nova-demanda.html">Nova Demanda</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-3">
+        <h1 class="mb-3">Dashboard</h1>
+
+        <div class="filters mb-3">
+            <div class="filter-item">
+                <select id="periodoFilter">
+                    <option value="7">Últimos 7 dias</option>
+                    <option value="30" selected>Últimos 30 dias</option>
+                    <option value="90">Últimos 90 dias</option>
+                    <option value="180">Últimos 6 meses</option>
+                    <option value="365">Último ano</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mini-indicators">
+            <div class="col-quarter">
+                <div class="card">
+                    <div class="stat-card ultra-compact">
+                        <div class="stat-info">
+                            <div class="stat-label">Total de Demandas</div>
+                            <div class="stat-value" id="totalDemandas">48</div>
+                            <div class="stat-change positive" id="totalDemandasChange">+12% em relação ao período anterior</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-quarter">
+                <div class="card">
+                    <div class="stat-card ultra-compact">
+                        <div class="stat-info">
+                            <div class="stat-label">Demandas Abertas</div>
+                            <div class="stat-value" id="demandasAbertas">26</div>
+                            <div class="stat-change positive" id="demandasAbertasChange">+5% em relação ao período anterior</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-quarter">
+                <div class="card">
+                    <div class="stat-card ultra-compact">
+                        <div class="stat-info">
+                            <div class="stat-label">Tempo Médio de Resolução</div>
+                            <div class="stat-value" id="tempoMedio">8.5 dias</div>
+                            <div class="stat-change negative" id="tempoMedioChange">-2.3 dias em relação ao período anterior</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-quarter">
+                <div class="card">
+                    <div class="stat-card ultra-compact">
+                        <div class="stat-info">
+                            <div class="stat-label">Taxa de Resolução</div>
+                            <div class="stat-value" id="taxaResolucao">45.8%</div>
+                            <div class="stat-change positive" id="taxaResolucaoChange">+3.2% em relação ao período anterior</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h2>Demandas por Status e Categoria</h2>
+            </div>
+            <div class="card-body">
+                <canvas id="demandasChart" height="300"></canvas>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h2>Evolução de Demandas</h2>
+            </div>
+            <div class="card-body">
+                <canvas id="evolucaoChart" height="200"></canvas>
+            </div>
+        </div>
+
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Sistema de Gestão de Condomínio</p>
+                <p>Desenvolvido para facilitar a gestão do condomínio e tornar o processo de atendimento de demandas mais transparente e eficiente.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.min.js"></script>
+    <script src="js/dashboard.min.js"></script>
+</body>
+</html>
