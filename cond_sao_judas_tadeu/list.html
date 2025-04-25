@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Demandas - Condomínio São Judas Tadeu{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="page-title">Demandas</h1>
+  
+  {% for category, message in get_flashed_messages(with_categories=true) %}
+  <div class="alert alert-{{ category }}">{{ message }}</div>
+  {% endfor %}
+  
+  <form id="filter-form" action="{{ url_for('demandas.list') }}" method="get">
+    <div class="filters">
+      <div class="filter-item">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="Todos os Status" {% if status == "Todos os Status" %}selected{% endif %}>Todos os Status</option>
+          <option value="Aberta" {% if status == "Aberta" %}selected{% endif %}>Aberta</option>
+          <option value="Em Análise" {% if status == "Em Análise" %}selected{% endif %}>Em Análise</option>
+          <option value="Em Andamento" {% if status == "Em Andamento" %}selected{% endif %}>Em Andamento</option>
+          <option value="Aguardando Terceiros" {% if status == "Aguardando Terceiros" %}selected{% endif %}>Aguardando Terceiros</option>
+          <option value="Resolvida" {% if status == "Resolvida" %}selected{% endif %}>Resolvida</option>
+          <option value="Cancelada" {% if status == "Cancelada" %}selected{% endif %}>Cancelada</option>
+        </select>
+      </div>
+      
+      <div class="filter-item">
+        <label for="categoria">Categoria</label>
+        <select id="categoria" name="categoria">
+          <option value="Todas as Categorias" {% if categoria == "Todas as Categorias" %}selected{% endif %}>Todas as Categorias</option>
+          <option value="Elétrica" {% if categoria == "Elétrica" %}selected{% endif %}>Elétrica</option>
+          <option value="Hidráulica" {% if categoria == "Hidráulica" %}selected{% endif %}>Hidráulica</option>
+          <option value="Estrutural" {% if categoria == "Estrutural" %}selected{% endif %}>Estrutural</option>
+          <option value="Limpeza" {% if categoria == "Limpeza" %}selected{% endif %}>Limpeza</option>
+          <option value="Segurança" {% if categoria == "Segurança" %}selected{% endif %}>Segurança</option>
+        </select>
+      </div>
+      
+      <div class="filter-item">
+        <label for="criticidade">Criticidade</label>
+        <select id="criticidade" name="criticidade">
+          <option value="Todas as Criticidades" {% if criticidade == "Todas as Criticidades" %}selected{% endif %}>Todas as Criticidades</option>
+          <option value="Alta" {% if criticidade == "Alta" %}selected{% endif %}>Alta Criticidade</option>
+          <option value="Média" {% if criticidade == "Média" %}selected{% endif %}>Média Criticidade</option>
+          <option value="Baixa" {% if criticidade == "Baixa" %}selected{% endif %}>Baixa Criticidade</option>
+        </select>
+      </div>
+      
+      <div class="filter-item">
+        <label for="busca">Buscar</label>
+        <input type="text" id="busca" name="busca" placeholder="Buscar..." value="{{ busca }}">
+      </div>
+    </div>
+  </form>
+  
+  {% if demandas %}
+    {% for demanda in demandas %}
+    <div class="demanda-item">
+      <div class="demanda-header">
+        <h3 class="demanda-title">{{ demanda.titulo }}</h3>
+        <span class="demanda-id">ID: {{ demanda.id }}</span>
+      </div>
+      
+      <div class="demanda-meta">
+        <span class="badge badge-primary">{{ demanda.categoria }}</span>
+        
+        {% if demanda.status == "Aberta" %}
+          <span class="badge badge-warning">{{ demanda.status }}</span>
+        {% elif demanda.status == "Resolvida" %}
+          <span class="badge badge-success">{{ demanda.status }}</span>
+        {% elif demanda.status == "Cancelada" %}
+          <span class="badge badge-danger">{{ demanda.status }}</span>
+        {% else %}
+          <span class="badge badge-primary">{{ demanda.status }}</span>
+        {% endif %}
+        
+        {% if demanda.criticidade == "Alta" %}
+          <span class="badge badge-danger">{{ demanda.criticidade }}</span>
+        {% elif demanda.criticidade == "Média" %}
+          <span class="badge badge-warning">{{ demanda.criticidade }}</span>
+        {% else %}
+          <span class="badge badge-success">{{ demanda.criticidade }}</span>
+        {% endif %}
+        
+        <span>{{ demanda.data_criacao }}</span>
+      </div>
+      
+      <div class="demanda-actions">
+        <a href="{{ url_for('demandas.detalhes', demanda_id=demanda.id) }}" class="btn btn-outline">Detalhes</a>
+      </div>
+    </div>
+    {% endfor %}
+    
+    <div class="pagination">
+      {% if page > 1 %}
+        <a href="{{ url_for('demandas.list', page=page-1, status=status, categoria=categoria, criticidade=criticidade, busca=busca) }}" class="btn btn-outline">Anterior</a>
+      {% endif %}
+      
+      {% for i in range(1, total_pages + 1) %}
+        <a href="{{ url_for('demandas.list', page=i, status=status, categoria=categoria, criticidade=criticidade, busca=busca) }}" class="btn {% if i == page %}btn-primary{% else %}btn-outline{% endif %}">{{ i }}</a>
+      {% endfor %}
+      
+      {% if page < total_pages %}
+        <a href="{{ url_for('demandas.list', page=page+1, status=status, categoria=categoria, criticidade=criticidade, busca=busca) }}" class="btn btn-outline">Próxima</a>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">
+      Nenhuma demanda encontrada com os filtros selecionados.
+    </div>
+  {% endif %}
+  
+  <div class="actions">
+    <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary">Ver Dashboard</a>
+    <a href="{{ url_for('demandas.nova') }}" class="btn btn-success">Nova Demanda</a>
+  </div>
+</div>
+{% endblock %}
