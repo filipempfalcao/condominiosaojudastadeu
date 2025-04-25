@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Nova Demanda - Condomínio São Judas Tadeu{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="page-title">Nova Demanda</h1>
+  
+  <a href="{{ url_for('demandas.list') }}" class="btn btn-outline">← Voltar para Demandas</a>
+  
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2 class="card-title">Cadastrar Nova Demanda</h2>
+    </div>
+    <div class="card-body">
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+      
+      <form id="nova-demanda-form" method="post" action="{{ url_for('demandas.nova') }}">
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input type="text" id="titulo" name="titulo" placeholder="Ex: Lâmpada queimada no corredor" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" name="categoria" required>
+            <option value="Selecione uma categoria">Selecione uma categoria</option>
+            <option value="Elétrica">Elétrica</option>
+            <option value="Hidráulica">Hidráulica</option>
+            <option value="Estrutural">Estrutural</option>
+            <option value="Limpeza">Limpeza</option>
+            <option value="Segurança">Segurança</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="criticidade">Criticidade</label>
+          <select id="criticidade" name="criticidade" required>
+            <option value="Selecione a criticidade">Selecione a criticidade</option>
+            <option value="Baixa">Baixa</option>
+            <option value="Média">Média</option>
+            <option value="Alta">Alta</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" placeholder="Descreva detalhadamente o problema..." required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="localizacao">Localização</label>
+          <input type="text" id="localizacao" name="localizacao" placeholder="Ex: Corredor do 3º andar, próximo ao apartamento..." required>
+        </div>
+        
+        <div class="form-group">
+          <label for="anexos">Anexos (opcional)</label>
+          <input type="file" id="anexos" name="anexos">
+          <small>Você pode anexar fotos ou documentos relacionados à demanda (máx. 5MB)</small>
+        </div>
+        
+        <div class="form-actions">
+          <a href="{{ url_for('demandas.list') }}" class="btn btn-outline">Cancelar</a>
+          <button type="submit" class="btn btn-success">Enviar Demanda</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

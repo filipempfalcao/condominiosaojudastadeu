@@ -1,0 +1,29 @@
+"""
+Arquivo de requisitos para o projeto de controle de demandas do condomínio.
+Lista todas as dependências necessárias para executar a aplicação.
+"""
+
+# Framework web
+Flask==2.2.3
+Flask-Login==0.6.2
+Werkzeug==2.2.3
+
+# Integração com Google Sheets
+gspread==5.7.2
+oauth2client==4.1.3
+
+# Processamento de dados e visualização
+pandas==1.5.3
+plotly==5.13.1
+
+# Segurança
+python-dotenv==1.0.0
+
+# Testes
+coverage==7.2.2
+pytest==7.3.1
+
+# Utilitários
+Jinja2==3.1.2
+MarkupSafe==2.1.2
+itsdangerous==2.1.2
